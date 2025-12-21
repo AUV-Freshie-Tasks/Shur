@@ -68,6 +68,22 @@ int main(){
 	matrixC= matrixA.invertMatrix();
 	cout<<"matrixA inverse:\n";
 	matrixC.print();
+
+	//Test for LU Decomposition
+	matrixC = matrixA.getUpper();
+	matrixB = matrixA.getLower();
+	cout<<"This is Upper:\n";
+	matrixC.print();
+	cout<<"This is Lower:\n";
+	matrixB.print();
+	if(matrixA==matrixB*matrixC)
+	{
+		cout<<"LU Decomposition works flawlessly!\n";
+	}
+	else
+	{
+		cout<<"LU Decomposition does not work!\n";
+	}
 	return 0;
 };
 

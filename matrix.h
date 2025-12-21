@@ -165,6 +165,87 @@ class Matrix{
 		}
 
 
+		//LU Decomposition
+		Matrix getLower()
+		{
+			Matrix L(rows,cols);
+			Matrix tmp(rows, cols);
+
+			for(int i=0; i<rows; i++)
+                        {
+                                for(int j=0; j<cols;j++)
+                                {
+                                        tmp.data[i][j] = data[i][j];
+                                }
+                        }
+
+			for(int i=0;i<rows; i++)
+			{
+				L.data[i][i] = 1;
+			}
+
+			for(int i=0; i<rows; i++)
+			{
+				for(int j=i+1; j<rows; j++)
+				{
+					T temp = tmp.data[j][i]/tmp.data[i][i];
+					for(int k=0; k<rows; k++)
+					{
+						tmp.data[j][k] = tmp.data[j][k] - temp*tmp.data[i][k];
+					}
+					L.data[j][i] = temp;
+				}
+			}
+			return L;
+		}
+
+	        Matrix getUpper()
+                {
+			Matrix tmp(rows,cols);
+			for(int i=0; i<rows; i++)
+                        {
+                                for(int j=0; j<cols;j++)
+                                {
+                                        tmp.data[i][j] = data[i][j];
+                                }
+                        }
+
+
+
+                        for(int i=0; i<rows; i++)
+                        {
+                                for(int j=i+1; j<rows; j++)
+                                {
+                                        T temp = tmp.data[j][i]/tmp.data[i][i];
+                                        for(int k=0; k<rows; k++)
+                                        {
+                                                tmp.data[j][k] = tmp.data[j][k] - temp*tmp.data[i][k];
+                                        }
+                                }
+                        }
+
+                        
+			return tmp;
+                }
+
+
+		//Overloading the == operator
+		bool operator==(const Matrix &other)
+		{
+			if(data==other.data)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+
+	
+
+
 
 };
 
