@@ -10,6 +10,7 @@ int main(){
 	size_t numberOfCols;
 	size_t dataA;
 	size_t dataB;
+	size_t temp;
 	cout<<"Test for Addition of Matrices\n";
 	cout<<"Type number of rows:\n";
 	cin>> numberOfRows;
@@ -23,7 +24,7 @@ int main(){
         cin>> dataB;
 
 	system("clear");
-	Matrix<int> matrixA(numberOfRows, numberOfCols);
+	Matrix<double> matrixA(numberOfRows, numberOfCols);
 	for(int i=0; i<numberOfRows; i++)
 	{
 		for(int j=0; j< numberOfCols; j++)
@@ -33,7 +34,7 @@ int main(){
 		}
 	}	
 
-	Matrix<int> matrixB(numberOfRows, numberOfCols);
+	Matrix<double> matrixB(numberOfRows, numberOfCols);
         for(int i=0; i<numberOfRows; i++)
         {
                 for(int j=0; j< numberOfCols; j++)
@@ -43,7 +44,7 @@ int main(){
                 }
         }
 
-	Matrix<int> matrixC(numberOfRows, numberOfCols);
+	Matrix<double> matrixC(numberOfRows, numberOfCols);
 	matrixC = matrixA + matrixB;
 	
 	cout<<"matrixA:\n";	
@@ -52,11 +53,21 @@ int main(){
         matrixB.print();
 	cout<<"matrixA + matrixB:\n";
         matrixC.print();
+//	cout<<"Type any number to continue:\n";
+//	cin>>temp;
+//	system("clear");
 
+	//Test for Multiplication of Matrices
+	//incomplete
+	matrixC = matrixA*matrixB;
+	cout<<"matrixA*matrixB:\n";
+	matrixC.print();
 
-
-
-
+	//Test for Inversion
+	//incomplete
+	matrixC= matrixA.invertMatrix();
+	cout<<"matrixA inverse:\n";
+	matrixC.print();
 	return 0;
 };
 

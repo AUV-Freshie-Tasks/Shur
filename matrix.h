@@ -1,6 +1,7 @@
 #pragma MATRIX_H
 
-#include <vector>;
+#include <vector>
+
 using namespace std;
 template <class T>
 class Matrix{
@@ -82,6 +83,88 @@ class Matrix{
 		//	}
 		return result;
 		}
+
+		//function: multiplyScalar
+		void multiplyScalar(double value)
+		{
+			for(int i=0; i< rows; i++)
+                                {
+                                        for(int j=0; j<cols; j++)
+                                        {
+						data[i][j] = data[i][j]*value;
+                                        }
+                                }
+		}
+
+		//Overloading * operator
+		//To perform Matrix multiplication
+                Matrix operator*(const Matrix &other)
+		{
+			Matrix result(rows, other.cols);
+			if(cols == other.rows)
+			{
+				for(int i=0; i< rows; i++)
+                                {
+                                        for(int j=0; j<other.cols; j++)
+                                        {
+						T value =0;
+						for(int k=0; k<cols; k++)
+						{
+							value = data[i][k]*other.data[k][j] + value;
+						}
+						result.data[i][j] = value;
+                                        }
+                                }
+	
+			}
+		//	else{}
+
+			return result;
+
+		}
+
+		//function: invertMatrix
+		Matrix invertMatrix()
+		{
+			Matrix result(rows,cols);
+			Matrix joined(rows,2*cols);
+			for(int i=0; i<rows; i++)
+			{
+				for(int j=0; j<cols; j++)
+				{
+					joined.data[i][j] = data[i][j];
+				}
+				joined.data[i][i+cols] = 1;
+			}
+
+			for(int i=0; i<rows; i++)
+			{
+				T temp = joined.data[i][i];
+				for(int j=0; j<2*rows; j++)
+				{
+					joined.data[i][j] = joined.data[i][j] / temp;
+				}
+				for(int k=0; k< rows; k++)
+				{
+					if(k!=i){
+					T value = joined.data[k][i];
+					for(int l=0;l<2*rows; l++)
+					{
+						joined.data[k][l] = joined.data[k][l] - joined.data[i][l]*value;
+					}}
+				}
+			}
+			for(int i=0; i<rows; i++)
+			{
+				for(int j=rows; j<2*rows; j++)
+				{
+					result.data[i][j-rows]= joined.data[i][j];
+				}
+			}
+			return result;
+		}
+
+
 
 };
 
