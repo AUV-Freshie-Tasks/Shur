@@ -1,6 +1,8 @@
 #include <iostream>
 #include "matrix.h"
 #include <stdlib.h>
+#include <utility>
+
 using namespace std;
 
 
@@ -70,20 +72,15 @@ int main(){
 	matrixC.print();
 
 	//Test for LU Decomposition
-	matrixC = matrixA.getUpper();
-	matrixB = matrixA.getLower();
-	cout<<"This is Upper:\n";
-	matrixC.print();
-	cout<<"This is Lower:\n";
+	pair<Matrix<double>,Matrix<double>> LU = matrixA.getLU();
+	matrixB = LU.first;
+	matrixC = LU.second;
 	matrixB.print();
-	if(matrixA==matrixB*matrixC)
-	{
-		cout<<"LU Decomposition works flawlessly!\n";
-	}
-	else
-	{
-		cout<<"LU Decomposition does not work!\n";
-	}
+	matrixC.print();
+
+
+	cout<<"\n The key for matrixA is:\n";
+	cout<<matrixA.generateKey();
 	return 0;
 };
 

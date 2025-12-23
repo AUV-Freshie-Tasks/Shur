@@ -1,6 +1,8 @@
-#pragma MATRIX_H
+#pragma once
 
 #include <vector>
+#include <utility>
+#include "LRUcache.h"
 
 using namespace std;
 template <class T>
@@ -9,11 +11,14 @@ class Matrix{
 		T rows;
 		T cols;
 		vector<vector<T>> data;
+		LRUcache<pair<Matrix<T>,Matrix<T>>> cache;
 	public:
+
+
 	        //constructor 
+		Matrix() : rows(0),cols(0){};
 		Matrix(size_t r, size_t c) : rows(r), cols(c)
-	        {
-	
+	        {	
 
 		//resizing the vector of vector	
 		data.resize(rows);
@@ -166,7 +171,7 @@ class Matrix{
 
 
 		//LU Decomposition
-		Matrix getLower()
+		pair<Matrix,Matrix> getLU()
 		{
 			Matrix L(rows,cols);
 			Matrix tmp(rows, cols);
@@ -178,6 +183,12 @@ class Matrix{
                                         tmp.data[i][j] = data[i][j];
                                 }
                         }
+			size_t key = tmp.generateKey();
+			pair<Matrix,Matrix> temp = cache.get(key);
+			if(temp.first.rows !=0)
+			{
+				return temp;
+			}
 
 			for(int i=0;i<rows; i++)
 			{
@@ -196,37 +207,9 @@ class Matrix{
 					L.data[j][i] = temp;
 				}
 			}
-			return L;
+			cache.put(key, make_pair(L,tmp));
+			return make_pair(L,tmp);
 		}
-
-	        Matrix getUpper()
-                {
-			Matrix tmp(rows,cols);
-			for(int i=0; i<rows; i++)
-                        {
-                                for(int j=0; j<cols;j++)
-                                {
-                                        tmp.data[i][j] = data[i][j];
-                                }
-                        }
-
-
-
-                        for(int i=0; i<rows; i++)
-                        {
-                                for(int j=i+1; j<rows; j++)
-                                {
-                                        T temp = tmp.data[j][i]/tmp.data[i][i];
-                                        for(int k=0; k<rows; k++)
-                                        {
-                                                tmp.data[j][k] = tmp.data[j][k] - temp*tmp.data[i][k];
-                                        }
-                                }
-                        }
-
-                        
-			return tmp;
-                }
 
 
 		//Overloading the == operator
@@ -242,10 +225,22 @@ class Matrix{
 			}
 		}
 
+		//Generate key from matrix
+		//basic and prone to collsions, to be changed later
+		size_t generateKey()
+		{
+			hash<T> h;
+			size_t temp =0;
+			for(int i=0; i<rows;i++)
+			{
+				for(int j=0; j<cols; j++)\
+				{
+					temp = temp + h(data[i][j]);
+				}
+			}
+			return temp;
 
-	
-
-
+		}	
 
 };
 
