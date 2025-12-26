@@ -1,4 +1,5 @@
 #include <pybind11/pybind11.h>
+#include <pybind11/operators.h>
 #include "matrix.h"
 #include <iostream>
 
@@ -8,6 +9,8 @@ PYBIND11_MODULE(bindingModule, m , py::mod_gil_not_used()) {
 	py::class_<Matrix<double>>(m, "Matrix")
 		.def(py::init<size_t,size_t>())
 		.def(py::init<>())
+		.def(py::self + py::self)
+		.def(py::self*py::self)
                 
 	.def("getValue", &Matrix<double>::getValue)
         .def("insertValue", &Matrix<double>::insertValue)

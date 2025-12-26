@@ -43,7 +43,7 @@ class Matrix{
 		}
 
 	        //function: getValue
-		T getValue(size_t r, size_t c)
+		T getValue(size_t r, size_t c) const
 		{
 			return data[r][c];
 		}
@@ -71,7 +71,7 @@ class Matrix{
 
 		//overloading the + operator
 
-		Matrix operator+(const Matrix &other)
+		Matrix operator+(const Matrix &other) const
 		{
 			Matrix result(rows,cols);
 			if(rows==other.rows && cols==other.cols)
@@ -105,7 +105,7 @@ class Matrix{
 
 		//Overloading * operator
 		//To perform Matrix multiplication
-                Matrix operator*(const Matrix &other)
+                Matrix operator*(const Matrix &other) const
 		{
 			Matrix result(rows, other.cols);
 			if(cols == other.rows)
