@@ -20,8 +20,8 @@ template <typename T>
 class LRUcache {
 	public:
 		size_t capacity;
-		Node<T>* head = new Node(0, T());
-		Node<T>* tail = new Node(0, T());
+		Node<T>* head = new Node<T>(0, T());
+	        Node<T>* tail = new Node<T>(0, T());
 		unordered_map<size_t,Node<T>*> cache;
 	
 	LRUcache() : capacity(5) {
@@ -80,7 +80,7 @@ class LRUcache {
 			rmNode(tempp);
 		}
 
-		Node<T>* temppp = new Node(key, value);
+		Node<T>* temppp = new Node<T>(key, value);
 		addNode(temppp);
 		cache[key] = temppp;
 		return;

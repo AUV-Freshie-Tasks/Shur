@@ -3,20 +3,22 @@
 #include <vector>
 #include <utility>
 #include "LRUcache.h"
-
+#include <iostream>
 using namespace std;
+
 template <class T>
 class Matrix{
 	private:
 		T rows;
 		T cols;
 		vector<vector<T>> data;
-		LRUcache<pair<Matrix<T>,Matrix<T>>> cache;
+	        static LRUcache<pair<Matrix<T>,Matrix<T>>> cache;
+
 	public:
 
 
 	        //constructor 
-		Matrix() : rows(0),cols(0){};
+		Matrix() : rows(0), cols(0){}
 		Matrix(size_t r, size_t c) : rows(r), cols(c)
 	        {	
 
@@ -233,9 +235,11 @@ class Matrix{
 			size_t temp =0;
 			for(int i=0; i<rows;i++)
 			{
-				for(int j=0; j<cols; j++)\
+				for(int j=0; j<cols; j++)
 				{
+
 					temp = temp + h(data[i][j]);
+					temp = temp*10;
 				}
 			}
 			return temp;
@@ -247,4 +251,5 @@ class Matrix{
 
 
 
-
+template <class T>
+LRUcache<pair<Matrix<T>, Matrix<T>>> Matrix<T>::cache;
