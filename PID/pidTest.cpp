@@ -4,16 +4,18 @@ using namespace std;
 
 int main(){
 	PID c;
+	double setpoint = 1000000;
+	double var=2;
+	double error;
 
-	cout<<c.finalValue(2.3)<< "\n";
-        cout<<c.finalValue(2.6)<< "\n";
-        cout<<c.finalValue(6.7)<< "\n";
-        cout<<c.finalValue(4.2)<< "\n";
-        cout<<c.finalValue(4.5)<< "\n";
-        cout<<c.finalValue(9.9)<< "\n";
-        cout<<c.finalValue(4.5)<< "\n";
-        cout<<c.finalValue(3.4)<< "\n";
-        cout<<c.finalValue(6.5)<< "\n";
+
+	for(int i = 0; i <1000; i++){
+	
+		error = var - setpoint;
+		var = var - c.finalValue(error);
+		cout<<var<<"\n";
+	}
+
 
 	return 0;
 

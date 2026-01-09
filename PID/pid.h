@@ -11,7 +11,7 @@ double Kd = 1;
 class Proportional{
 	public:
 		Proportional() {};
-		double Kp = 1;
+		double Kp = 0.0001;
 		void setKp(double temp){
 			Kp = temp;
 		}
@@ -24,15 +24,16 @@ class Proportional{
 class Integral{
         public:
 		Integral() {};
-	       double Ki = 1;
+	       double Ki = 0.01;
 
 	       void setKi(double temp) {
 	       Ki = temp;
 	       };
 
 	       double integralValue(double error){
-		       size_t l = cache.size();
+		      
 		       cache.push_front(error);
+		       size_t l = cache.size();
 		       if(l > maxSize)
 		       {
 			       cache.pop_back();
@@ -53,7 +54,7 @@ class Integral{
 class Differential{
 	public:
 		Differential() {};
-		double Kd = 1;
+		double Kd = 0.001;
 		double prevError;
 		void setKd(double temp){
 			Kd = temp;
